@@ -8,14 +8,14 @@ def doGet(url):
     cert = os.getenv('NEXTENSIO_CERT') 
     if cert == None:
         return requests.get(url)
-    else
+    else:
         return requests.get(url, verify=cert)
 
 def doPost(url, data):
     cert = os.getenv('NEXTENSIO_CERT') 
     if cert == None:
         return requests.post(url, json=data)
-    else
+    else:
         return requests.post(url, json=data, verify=cert)
 
 def is_controller_up(url):
