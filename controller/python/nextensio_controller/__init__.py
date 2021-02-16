@@ -6,6 +6,8 @@ from .apis import create_user
 from .apis import create_bundle
 from .apis import create_user_attr
 from .apis import create_bundle_attr
+from .apis import create_host_attr
+from .apis import create_userext_attr
 from .apis import create_policy
 from .apis import create_route
 from .apis import create_cert

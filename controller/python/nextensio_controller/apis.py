@@ -27,10 +27,9 @@ def is_controller_up(url):
         return False
 
 
-def create_gateway(url, gw):
-    data = {'name': gw}
+def do_post(url, data, suffix):
     try:
-        ret = doPost(url+"addgateway", data)
+        ret = doPost(url+suffix, data)
         if ret.status_code != 200 or ret.json()['Result'] != "ok":
             return False
         return True
@@ -39,17 +38,11 @@ def create_gateway(url, gw):
         return False
 
 
-def create_tenant(url, name, gws, domains, image, pods):
-    data = {'curid': 'unknown', 'name': name, 'gateways': gws,
-            'domains': domains, 'image': image, 'pods': pods}
-    try:
-        ret = doPost(url+"addtenant", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
+def create_gateway(url, data):
+    return do_post(url, data, "addgateway")
+
+def create_tenant(url, data):
+    return do_post(url, data, "addtenant")
 
 
 def get_tenants(url):
@@ -63,92 +56,36 @@ def get_tenants(url):
         return False, json.dumps([])
 
 
-def create_user(url, uid, tenant, name, email, services, gateway, pod):
-    data = {'uid': uid, 'tenant': tenant, 'name': name, 'email': email,
-            'services': services, 'gateway': gateway, 'pod': pod}
-    try:
-        ret = doPost(url+"adduser", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
+def create_user(url, data):
+    return do_post(url, data, "adduser")
 
-
-def create_bundle(url, bid, tenant, name, services, gateway, pod):
-    data = {'bid': bid, 'tenant': tenant, 'name': name,
-            'services': services, 'gateway': gateway, 'pod': pod}
-    try:
-        ret = doPost(url+"addbundle", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
-
-
-def create_user_attr(url, uid, tenant, category, type, level, dept, team):
-    data = {'uid': uid, 'tenant': tenant, 'category': category, 'type': type, 'level': level,
-            'dept': dept, 'team': team}
-    try:
-        ret = doPost(url+"adduserattr", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
-
-
-def create_bundle_attr(url, bid, tenant, dept, team, IC, manager, nonemployee):
-    data = {'bid': bid, 'tenant': tenant, 'IC': IC, 'manager': manager,
-            'nonemployee': nonemployee, 'dept': dept, 'team': team}
-    try:
-        ret = doPost(url+"addbundleattr", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
-
+def create_bundle(url, data):
+    return do_post(url, data, "addbundle")
+    
+def create_user_attr(url, data):
+    return do_post(url, data, "adduserattr")
+ 
+def create_bundle_attr(url, data):
+    return do_post(url, data, "addbundleattr")
+ 
+def create_host_attr(url, data):
+    return do_post(url, data, "addhostattr")
+ 
+def create_userext_attr(url, data):
+    return do_post(url, data, "adduserextattr")
 
 def create_policy(url, tenant, pid, policy):
     rego = []
     for p in policy:
         rego.append(ord(p))
     data = {'tenant': tenant, 'pid': pid, 'rego': rego}
-    try:
-        ret = doPost(url+"addpolicy", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
+    return do_post(url, data, "addpolicy")
 
 
-def create_route(url, tenant, user, route, tag):
-    data = {'tenant': tenant, 'route': user + ":" + route, 'tag': tag}
-    try:
-        ret = doPost(url+"addroute", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
+def create_route(url, data):
+    return do_post(url, data, "addroute")
 
 
 def create_cert(url, cert):
     data = {'certid': 'CACert', 'cert': [ord(c) for c in cert]}
-    try:
-        ret = doPost(url+"addcert", data)
-        if ret.status_code != 200 or ret.json()['Result'] != "ok":
-            return False
-        return True
-    except:
-        pass
-        return False
+    return do_post(url, data, "addcert")
