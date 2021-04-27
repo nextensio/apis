@@ -46,7 +46,6 @@ def create_gateway(url, data, token):
 def create_tenant(url, data, token):
     return do_post(url, data, "global/add/tenant", token)
 
-
 def get_tenants(url, token):
     try:
         ret = doGet(url, "global/get/alltenants", token)
@@ -57,6 +56,9 @@ def get_tenants(url, token):
         pass
         return False, json.dumps([])
 
+
+def create_tenant_cluster(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/tenantcluster" % tenant, token)
 
 def create_user(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/user" % tenant, token)

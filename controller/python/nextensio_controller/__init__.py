@@ -1,6 +1,7 @@
 from .apis import is_controller_up
 from .apis import create_gateway
 from .apis import create_tenant
+from .apis import create_tenant_cluster
 from .apis import get_tenants
 from .apis import create_user
 from .apis import create_bundle
