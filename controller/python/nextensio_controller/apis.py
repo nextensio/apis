@@ -60,6 +60,9 @@ def get_tenants(url, token):
 def create_tenant_cluster(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/tenantcluster" % tenant, token)
 
+def create_attrset(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/attrset" % tenant, token)
+
 def create_user(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/user" % tenant, token)
 
