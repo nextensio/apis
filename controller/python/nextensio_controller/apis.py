@@ -56,6 +56,16 @@ def get_tenants(url, token):
         pass
         return False, json.dumps([])
 
+def get_onboard_log(url, tenant, uid, token):
+    try:
+        ret = doGet(url, "tenant/%s/get/onboardlog/%s" % (tenant, uid), token)
+        if ret.status_code != 200:
+            return False, json.dumps([])
+        return True, ret.json()
+    except:
+        pass
+        return False, json.dumps([])
+
 
 def create_tenant_cluster(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/tenantcluster" % tenant, token)
