@@ -66,6 +66,26 @@ def get_onboard_log(url, tenant, uid, token):
         pass
         return False, json.dumps([])
 
+def get_trace_request(url, tenant, traceid, token):
+    try:
+        ret = doGet(url, "tenant/%s/get/tracereq/%s" % (tenant, traceid), token)
+        if ret.status_code != 200:
+            return False, json.dumps([])
+        return True, ret.json()
+    except:
+        pass
+        return False, json.dumps([])
+
+def get_all_trace_requests(url, tenant, token):
+    try:
+        ret = doGet(url, "tenant/%s/get/alltracereq" % tenant, token)
+        if ret.status_code != 200:
+            return False, json.dumps([])
+        return True, ret.json()
+    except:
+        pass
+        return False, json.dumps([])
+
 
 def create_tenant_cluster(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/tenantcluster" % tenant, token)
@@ -90,6 +110,9 @@ def create_host_attr(url, tenant, data, token):
  
 def create_userext_attr(url, tenant, data, token):
     return do_post(url, data, "tenant/%s/add/userextattr" % tenant, token)
+
+def create_trace_request(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/tracereq" % tenant, token)
 
 def create_policy(url, tenant, pid, policy, token):
     rego = []

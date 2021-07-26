@@ -10,8 +10,11 @@ from .apis import create_user_attr
 from .apis import create_bundle_attr
 from .apis import create_host_attr
 from .apis import create_userext_attr
+from .apis import create_trace_request
 from .apis import create_policy
 from .apis import create_route
 from .apis import create_cert
 from .apis import get_onboard_log
+from .apis import get_trace_request
+from .apis import get_all_trace_requests
 
