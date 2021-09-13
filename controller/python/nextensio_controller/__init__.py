@@ -17,4 +17,5 @@ from .apis import create_cert
 from .apis import get_onboard_log
 from .apis import get_trace_request
 from .apis import get_all_trace_requests
+from .apis import get_bundle_key
 

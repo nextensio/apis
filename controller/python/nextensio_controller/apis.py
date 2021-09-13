@@ -39,6 +39,15 @@ def do_post(url, data, suffix, token):
         pass
         return False
 
+def do_get(url, suffix, token):
+    try:
+        ret = doGet(url, suffix, token)
+        if ret.status_code != 200 or ret.json()['Result'] != "ok":
+            return False, json.dumps([])
+        return True, ret.json()
+    except:
+        pass
+        return False, json.dumps([])
 
 def create_gateway(url, data, token):
     return do_post(url, data, "global/add/gateway", token)
@@ -129,3 +138,10 @@ def create_route(url, tenant, data, token):
 def create_cert(url, cert, token):
     data = {'certid': 'CACert', 'cert': [ord(c) for c in cert]}
     return do_post(url, data, "global/add/cert", token)
+
+def get_bundle_key(url, tenant, bid, token):
+    ok, bundle = do_get(url, "tenant/%s/get/bundle/%s" % (tenant, bid), token)
+    if not ok:
+        return ""
+    return bundle['Bundle']['sharedkey'] 
+
