@@ -145,3 +145,12 @@ def get_bundle_key(url, tenant, bid, token):
         return ""
     return bundle['Bundle']['sharedkey'] 
 
+def export_user_attrset(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/userattr/exportset" % tenant, token)
+
+def export_user_attrvals(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/userattr/exportattr" % tenant, token)
+
+def import_user_attrvals(url, tenant, data, token):
+    return do_post(url, data, "tenant/%s/add/userattr/import" % tenant, token)
+
