@@ -18,6 +18,4 @@ from .apis import get_onboard_log
 from .apis import get_trace_request
 from .apis import get_all_trace_requests
 from .apis import get_bundle_key
-from .apis import export_user_attrset
-from .apis import export_user_attrvals
-from .apis import import_user_attrvals
+
