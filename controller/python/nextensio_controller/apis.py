@@ -151,3 +151,7 @@ def get_bundle_key(url, tenant, bid, token, group):
         return ""
     return bundle['Bundle']['sharedkey'] 
 
+def create_clientid(url, clientid, token, group):
+    data = {'clientid': clientid}
+    return do_post(url, data, "global/add/clientid", token, group)
+
