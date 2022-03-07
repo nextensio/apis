@@ -115,7 +115,7 @@ def create_bundle(url, tenant, data, token, group):
     return do_post(url, data, "tenant/%s/add/bundle" % tenant, token, group)
     
 def create_user_attr(url, tenant, data, token, group):
-    return do_post(url, data, "tenant/%s/add/userattr" % tenant, token, group)
+    return do_post(url, data, "tenant/%s/add/userattr/%s" % (tenant,data["uid"]),  token, group)
  
 def create_bundle_attr(url, tenant, data, token, group):
     return do_post(url, data, "tenant/%s/add/bundleattr" % tenant, token, group)
