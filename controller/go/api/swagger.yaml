@@ -4319,8 +4319,12 @@ components:
         type: object
     userAttrSingle:
       type: object
+      additionalProperties:
+        type: string
     traceReq:
       type: object
+      additionalProperties:
+        type: string
     unAuthorized:
       type: string
       description: Error message when user is unauthorized to use this API.

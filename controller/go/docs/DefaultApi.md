@@ -515,7 +515,7 @@ add trace request
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**TraceReq**](TraceReq.md)| need &quot;traceid&quot; as a mandatory key | 
+  **body** | [**map[string]string**](map.md)| need &quot;traceid&quot; as a mandatory key | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
 
@@ -613,7 +613,7 @@ Add attributes to the user of a tenant.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**UserAttrSingle**](UserAttrSingle.md)| provide user attributes to be added/updated | 
+  **body** | [**map[string]string**](map.md)| provide user attributes to be added/updated | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
   **userid** | **string**| provide User ID | 

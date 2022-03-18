@@ -1464,7 +1464,7 @@ add trace request
  * @param tenantId provide tenant ID
 @return string
 */
-func (a *DefaultApiService) AddTraceReq(ctx context.Context, body TraceReq, xNextensioGroup string, tenantId string) (string, *http.Response, error) {
+func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string) (string, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -1797,7 +1797,7 @@ Add attributes to the user of a tenant.
  * @param userid provide User ID
 @return string
 */
-func (a *DefaultApiService) AddUserAttr(ctx context.Context, body UserAttrSingle, xNextensioGroup string, tenantId string, userid string) (string, *http.Response, error) {
+func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string, userid string) (string, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
