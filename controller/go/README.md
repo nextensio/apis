@@ -123,14 +123,13 @@ Class | Method | HTTP request | Description
  - [Domain](docs/Domain.md)
  - [GatewayStruct](docs/GatewayStruct.md)
  - [GetPolicyStruct](docs/GetPolicyStruct.md)
- - [GetRoute](docs/GetRoute.md)
+ - [GetTenantcluster](docs/GetTenantcluster.md)
  - [HostRule](docs/HostRule.md)
  - [IdpStruct](docs/IdpStruct.md)
  - [KeepaliveReq](docs/KeepaliveReq.md)
  - [KeepaliveResp](docs/KeepaliveResp.md)
  - [OnboardLogDetails](docs/OnboardLogDetails.md)
  - [OnboardResult](docs/OnboardResult.md)
- - [OneRoute](docs/OneRoute.md)
  - [PolicyStruct](docs/PolicyStruct.md)
  - [PostResponse](docs/PostResponse.md)
  - [SignupDetails](docs/SignupDetails.md)
@@ -138,7 +137,6 @@ Class | Method | HTTP request | Description
  - [Tenant](docs/Tenant.md)
  - [TenantCluster](docs/TenantCluster.md)
  - [TenantUpdate](docs/TenantUpdate.md)
- - [Tenantcluster](docs/Tenantcluster.md)
  - [TraceReqDetails](docs/TraceReqDetails.md)
  - [TraceRule](docs/TraceRule.md)
  - [UserAdd](docs/UserAdd.md)
@@ -165,4 +163,4 @@ r, err := client.Service.Operation(auth, args)
 
 ## Author
 
-development@nextensio.com
+developer@nextensio.com

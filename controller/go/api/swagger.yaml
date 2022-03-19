@@ -3,7 +3,7 @@ info:
   title: Controller APIs
   description: APIs to act on Nextensio Controller
   contact:
-    email: development@nextensio.com
+    email: developer@nextensio.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -1506,7 +1506,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/tenantcluster'
+                $ref: '#/components/schemas/getTenantcluster'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -3277,20 +3277,20 @@ components:
         Cert: certificate string
         Domain: foo.com
         Client: client name
-    tenantcluster:
+    getTenantcluster:
       required:
       - Result
-      - _id
       - apodrepl
       - apodsets
       - gateway
+      - id
       - image
       type: object
       properties:
         Result:
           type: string
           example: ok or an error message
-        _id:
+        id:
           type: string
           example: gatewaydosfo3
         image:
@@ -3305,9 +3305,33 @@ components:
       example:
         image: nextensio/minion:latest
         apodsets: 2
-        _id: gatewaydosfo3
+        id: gatewaydosfo3
         Result: ok or an error message
         apodrepl: 1
+    tenantCluster:
+      required:
+      - apodrepl
+      - apodsets
+      - gateway
+      - id
+      - image
+      type: object
+      properties:
+        id:
+          type: string
+          example: gatewaydosfo3
+        gateway:
+          type: string
+          example: gatewaydosfo3.nextensio.net
+        image:
+          type: string
+          example: nextensio/minion:latest
+        apodrepl:
+          type: integer
+          example: 1
+        apodsets:
+          type: integer
+          example: 1
     adminrole:
       required:
       - Result
@@ -4043,30 +4067,6 @@ components:
         keyid:
           type: string
           example: <keyid>
-    tenantCluster:
-      required:
-      - apodrepl
-      - apodsets
-      - gateway
-      - id
-      - image
-      type: object
-      properties:
-        id:
-          type: string
-          example: gatewaydosfo3
-        gateway:
-          type: string
-          example: gatewaydosfo3.nextensio.net
-        image:
-          type: string
-          example: nextensio/minion:latest
-        apodrepl:
-          type: integer
-          example: 1
-        apodsets:
-          type: integer
-          example: 1
     policyStruct:
       required:
       - pid
@@ -4252,30 +4252,6 @@ components:
       items:
         $ref: '#/components/schemas/traceRule'
       x-schema-name: allStatsRules
-    oneRoute:
-      required:
-      - route
-      - tag
-      type: object
-      properties:
-        route:
-          type: string
-        tag:
-          type: string
-    allRoutes:
-      type: array
-      items:
-        $ref: '#/components/schemas/oneRoute'
-    getRoute:
-      required:
-      - route
-      - tag
-      type: object
-      properties:
-        route:
-          type: string
-        tag:
-          type: string
     userKey:
       required:
       - name

@@ -2111,7 +2111,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetTenantCluster**
-> Tenantcluster GetTenantCluster(ctx, xNextensioGroup, tenantId, gateway)
+> GetTenantcluster GetTenantCluster(ctx, xNextensioGroup, tenantId, gateway)
 get the  gateway information (nextensio internal) for a gateway assined to a tenant
 
 allows to retrieve a tenants gateway internal information
@@ -2127,7 +2127,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Tenantcluster**](tenantcluster.md)
+[**GetTenantcluster**](getTenantcluster.md)
 
 ### Authorization
 
