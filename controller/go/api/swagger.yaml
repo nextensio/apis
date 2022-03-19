@@ -1463,7 +1463,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/tenantcluster'
+                $ref: '#/components/schemas/allTenantclusters'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -3332,6 +3332,11 @@ components:
         apodsets:
           type: integer
           example: 1
+    allTenantclusters:
+      type: array
+      items:
+        $ref: '#/components/schemas/getTenantcluster'
+      x-schema-name: allTenantclusters
     adminrole:
       required:
       - Result
@@ -3938,11 +3943,13 @@ components:
         $ref: '#/components/schemas/TraceReq'
       x-schema-name: AllTraceReqDetails
     TraceReq:
+      type: object
       properties:
         trreq:
           type: object
-      example:
-        trreq: {}
+      additionalProperties:
+        type: string
+      x-schema-name: TraceReq
     clientID:
       required:
       - Result

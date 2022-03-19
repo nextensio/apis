@@ -1641,7 +1641,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllTenantCluster**
-> Tenantcluster GetAllTenantCluster(ctx, xNextensioGroup, tenantId)
+> []GetTenantcluster GetAllTenantCluster(ctx, xNextensioGroup, tenantId)
 get all clusters assigned for a tenant
 
 allows to retrieve info of all clusters assigned to a tenant
@@ -1656,7 +1656,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Tenantcluster**](tenantcluster.md)
+[**[]GetTenantcluster**](array.md)
 
 ### Authorization
 
@@ -1670,7 +1670,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllTraceReqs**
-> []TraceReq GetAllTraceReqs(ctx, xNextensioGroup, tenantId)
+> []map[string]string GetAllTraceReqs(ctx, xNextensioGroup, tenantId)
 get info about all trace requests
 
 retrieves info about all trace requests for the Trace policy. The trace requests specify the criteria to be used to trace one or more matching flows.
@@ -1685,7 +1685,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TraceReq**](array.md)
+[**[]map[string]string**](array.md)
 
 ### Authorization
 
