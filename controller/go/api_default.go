@@ -258,15 +258,15 @@ Add bundle to the specified tenant
  * @param body provide tenant info
  * @param xNextensioGroup
  * @param tenantId provie tenant ID
-
+@return PostResponse
 */
-func (a *DefaultApiService) AddBundle(ctx context.Context, body BundleStruct, xNextensioGroup string, tenantId string) (*http.Response, error) {
+func (a *DefaultApiService) AddBundle(ctx context.Context, body BundleStruct, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -287,7 +287,7 @@ func (a *DefaultApiService) AddBundle(ctx context.Context, body BundleStruct, xN
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -312,40 +312,57 @@ func (a *DefaultApiService) AddBundle(ctx context.Context, body BundleStruct, xN
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService add certificate
@@ -577,20 +594,20 @@ add gateway cluster to tenant
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddClusterHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of TenantCluster) - 
-@return string
+@return PostResponse
 */
 
 type DefaultApiAddClusterHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddClusterHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddClusterHandlerOpts) (string, *http.Response, error) {
+func (a *DefaultApiService) AddClusterHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddClusterHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue string
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -668,7 +685,7 @@ func (a *DefaultApiService) AddClusterHandler(ctx context.Context, xNextensioGro
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v string
+			var v PostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -811,20 +828,20 @@ add identity provider to tenant
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddIdpHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of AddIdp) - 
-@return string
+@return PostResponse
 */
 
 type DefaultApiAddIdpHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddIdpHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddIdpHandlerOpts) (string, *http.Response, error) {
+func (a *DefaultApiService) AddIdpHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddIdpHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue string
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -902,7 +919,7 @@ func (a *DefaultApiService) AddIdpHandler(ctx context.Context, xNextensioGroup s
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v string
+			var v PostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -1140,20 +1157,20 @@ add policy
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddPolicyHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of AddPolicy) - 
-
+@return PostResponse
 */
 
 type DefaultApiAddPolicyHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddPolicyHandlerOpts) (*http.Response, error) {
+func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddPolicyHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1174,7 +1191,7 @@ func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGrou
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1203,40 +1220,57 @@ func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGrou
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService add stats rule
@@ -1246,20 +1280,20 @@ add stats rule
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddStatsRuleHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of StatsRule) - 
-
+@return PostResponse
 */
 
 type DefaultApiAddStatsRuleHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddStatsRuleHandlerOpts) (*http.Response, error) {
+func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddStatsRuleHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1280,7 +1314,7 @@ func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioG
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1309,40 +1343,57 @@ func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioG
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService add basic info for a tenant
@@ -1462,15 +1513,15 @@ add trace request
  * @param body need &quot;traceid&quot; as a mandatory key
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
-@return string
+@return PostResponse
 */
-func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string) (string, *http.Response, error) {
+func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue string
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1544,7 +1595,7 @@ func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]str
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v string
+			var v PostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -1576,20 +1627,20 @@ add trace rule
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddTraceRuleHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of TraceRule) - 
-
+@return PostResponse
 */
 
 type DefaultApiAddTraceRuleHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddTraceRuleHandlerOpts) (*http.Response, error) {
+func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddTraceRuleHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1610,7 +1661,7 @@ func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioG
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1639,40 +1690,57 @@ func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioG
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService add user
@@ -1795,15 +1863,15 @@ Add attributes to the user of a tenant.
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
  * @param userid provide User ID
-@return string
+@return PostResponse
 */
-func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string, userid string) (string, *http.Response, error) {
+func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string, userid string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue string
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1878,7 +1946,7 @@ func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]str
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v string
+			var v PostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -1909,15 +1977,15 @@ add tenant user attrs for multiple users
  * @param body provide user attributes to be added/updated
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
-@return string
+@return PostResponse
 */
-func (a *DefaultApiService) AddUserAttrMultiple(ctx context.Context, body []interface{}, xNextensioGroup string, tenantId string) (string, *http.Response, error) {
+func (a *DefaultApiService) AddUserAttrMultiple(ctx context.Context, body []interface{}, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue string
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -1991,7 +2059,7 @@ func (a *DefaultApiService) AddUserAttrMultiple(ctx context.Context, body []inte
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v string
+			var v PostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -2146,20 +2214,20 @@ add bundle rule
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddbundleRuleHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of BundleRule) - 
-
+@return PostResponse
 */
 
 type DefaultApiAddbundleRuleHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddbundleRuleHandlerOpts) (*http.Response, error) {
+func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddbundleRuleHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -2180,7 +2248,7 @@ func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensio
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -2209,40 +2277,57 @@ func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensio
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService add host rule
@@ -2252,20 +2337,20 @@ add host rule
  * @param tenantId provide tenant ID
  * @param optional nil or *DefaultApiAddhostRuleHandlerOpts - Optional Parameters:
      * @param "Body" (optional.Interface of HostRule) - 
-
+@return PostResponse
 */
 
 type DefaultApiAddhostRuleHandlerOpts struct {
     Body optional.Interface
 }
 
-func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddhostRuleHandlerOpts) (*http.Response, error) {
+func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddhostRuleHandlerOpts) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue PostResponse
 	)
 
 	// create path and map variables
@@ -2286,7 +2371,7 @@ func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGr
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -2315,40 +2400,57 @@ func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGr
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v string
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
-					return localVarHttpResponse, newErr
+					return localVarReturnValue, localVarHttpResponse, newErr
 				}
 				newErr.model = v
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
 DefaultApiService delete an admin group from a tenant

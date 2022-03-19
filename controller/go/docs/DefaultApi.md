@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddBundle**
-> AddBundle(ctx, body, xNextensioGroup, tenantId)
+> PostResponse AddBundle(ctx, body, xNextensioGroup, tenantId)
 Add bundle.
 
 Add bundle to the specified tenant
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -236,7 +236,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddClusterHandler**
-> string AddClusterHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddClusterHandler(ctx, xNextensioGroup, tenantId, optional)
 add gateway cluster to tenant
 
 add gateway cluster to tenant
@@ -260,7 +260,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -303,7 +303,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddIdpHandler**
-> string AddIdpHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddIdpHandler(ctx, xNextensioGroup, tenantId, optional)
 add identity provider to tenant
 
 add identity provider to tenant
@@ -327,7 +327,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddPolicyHandler**
-> AddPolicyHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddPolicyHandler(ctx, xNextensioGroup, tenantId, optional)
 add policy
 
 add policy
@@ -424,7 +424,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -433,12 +433,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddStatsRuleHandler**
-> AddStatsRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddStatsRuleHandler(ctx, xNextensioGroup, tenantId, optional)
 add stats rule
 
 add stats rule
@@ -462,7 +462,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -471,7 +471,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -505,7 +505,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddTraceReq**
-> string AddTraceReq(ctx, body, xNextensioGroup, tenantId)
+> PostResponse AddTraceReq(ctx, body, xNextensioGroup, tenantId)
 add trace request
 
 add trace request
@@ -521,7 +521,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -535,7 +535,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddTraceRuleHandler**
-> AddTraceRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddTraceRuleHandler(ctx, xNextensioGroup, tenantId, optional)
 add trace rule
 
 add trace rule
@@ -559,7 +559,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -568,7 +568,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -603,7 +603,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddUserAttr**
-> string AddUserAttr(ctx, body, xNextensioGroup, tenantId, userid)
+> PostResponse AddUserAttr(ctx, body, xNextensioGroup, tenantId, userid)
 add tenant user attrs
 
 Add attributes to the user of a tenant.
@@ -620,7 +620,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -634,7 +634,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddUserAttrMultiple**
-> string AddUserAttrMultiple(ctx, body, xNextensioGroup, tenantId)
+> PostResponse AddUserAttrMultiple(ctx, body, xNextensioGroup, tenantId)
 add tenant user attrs for multiple users
 
 add tenant user attrs for multiple users
@@ -650,7 +650,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddbundleRuleHandler**
-> AddbundleRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddbundleRuleHandler(ctx, xNextensioGroup, tenantId, optional)
 add bundle rule
 
 add bundle rule
@@ -726,7 +726,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -735,12 +735,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddhostRuleHandler**
-> AddhostRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddhostRuleHandler(ctx, xNextensioGroup, tenantId, optional)
 add host rule
 
 add host rule
@@ -764,7 +764,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PostResponse**](postResponse.md)
 
 ### Authorization
 
@@ -773,7 +773,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

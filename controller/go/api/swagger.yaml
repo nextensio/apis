@@ -946,13 +946,11 @@ paths:
         required: true
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the user attributes has been added successfully."
+          description: Post API returned ok or an error string
           content:
             application/json:
               schema:
-                type: string
-                x-content-type: application/json
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -1066,8 +1064,11 @@ paths:
         required: true
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the bundle has been added successfully."
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2136,13 +2137,11 @@ paths:
         required: true
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the user attributes has been added successfully."
+          description: Post API returned ok or an error string
           content:
             application/json:
               schema:
-                type: string
-                x-content-type: application/json
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2177,13 +2176,11 @@ paths:
               $ref: '#/components/schemas/addIDP'
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the user attributes has been added successfully."
+          description: Post API returned ok or an error string
           content:
             application/json:
               schema:
-                type: string
-                x-content-type: application/json
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2298,13 +2295,11 @@ paths:
               $ref: '#/components/schemas/tenantCluster'
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the user attributes has been added successfully."
+          description: Post API returned ok or an error string
           content:
             application/json:
               schema:
-                type: string
-                x-content-type: application/json
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2418,13 +2413,11 @@ paths:
         required: true
       responses:
         "200":
-          description: "Returns a result string with 'ok' or an error message. If\
-            \ ok, the user attributes has been added successfully."
+          description: Post API returned ok or an error string
           content:
             application/json:
               schema:
-                type: string
-                x-content-type: application/json
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2537,7 +2530,11 @@ paths:
               $ref: '#/components/schemas/addPolicy'
       responses:
         "200":
-          description: Returns a result string with 'ok' or an error message.
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2610,7 +2607,11 @@ paths:
               $ref: '#/components/schemas/bundleRule'
       responses:
         "200":
-          description: Returns a result string with 'ok' or an error message.
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2742,7 +2743,11 @@ paths:
               $ref: '#/components/schemas/hostRule'
       responses:
         "200":
-          description: Returns a result string with 'ok' or an error message.
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2874,7 +2879,11 @@ paths:
               $ref: '#/components/schemas/traceRule'
       responses:
         "200":
-          description: Returns a result string with 'ok' or an error message.
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -2998,7 +3007,11 @@ paths:
               $ref: '#/components/schemas/statsRule'
       responses:
         "200":
-          description: Returns a result string with 'ok' or an error message.
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
         "401":
           description: User is unauthorized to use this API
           content:
