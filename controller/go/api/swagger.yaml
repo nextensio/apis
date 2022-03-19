@@ -2174,6 +2174,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/addIDP'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -2293,6 +2294,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/tenantCluster'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -2528,6 +2530,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/addPolicy'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -2605,6 +2608,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/bundleRule'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -2741,6 +2745,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/hostRule'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -2877,6 +2882,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/traceRule'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -3005,6 +3011,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/statsRule'
+        required: true
       responses:
         "200":
           description: Post API returned ok or an error string
@@ -3190,6 +3197,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/userKey'
+        required: true
       responses:
         "200":
           description: Returns a result string with 'ok' or an error message.

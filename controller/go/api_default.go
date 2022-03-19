@@ -17,7 +17,6 @@ import (
 	"net/url"
 	"strings"
 	"fmt"
-	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -590,18 +589,12 @@ func (a *DefaultApiService) AddClientid(ctx context.Context, body AddClientId, x
 DefaultApiService add gateway cluster to tenant
 add gateway cluster to tenant
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddClusterHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of TenantCluster) - 
 @return PostResponse
 */
-
-type DefaultApiAddClusterHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddClusterHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddClusterHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddClusterHandler(ctx context.Context, body TenantCluster, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -637,11 +630,7 @@ func (a *DefaultApiService) AddClusterHandler(ctx context.Context, xNextensioGro
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -824,18 +813,12 @@ func (a *DefaultApiService) AddGateway(ctx context.Context, body GatewayStruct, 
 DefaultApiService add identity provider to tenant
 add identity provider to tenant
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddIdpHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of AddIdp) - 
 @return PostResponse
 */
-
-type DefaultApiAddIdpHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddIdpHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddIdpHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddIdpHandler(ctx context.Context, body AddIdp, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -871,11 +854,7 @@ func (a *DefaultApiService) AddIdpHandler(ctx context.Context, xNextensioGroup s
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -1153,18 +1132,12 @@ func (a *DefaultApiService) AddMgdTenant(ctx context.Context, xNextensioGroup st
 DefaultApiService add policy
 add policy
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddPolicyHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of AddPolicy) - 
 @return PostResponse
 */
-
-type DefaultApiAddPolicyHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddPolicyHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, body AddPolicy, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -1200,11 +1173,7 @@ func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGrou
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -1276,18 +1245,12 @@ func (a *DefaultApiService) AddPolicyHandler(ctx context.Context, xNextensioGrou
 DefaultApiService add stats rule
 add stats rule
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddStatsRuleHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of StatsRule) - 
 @return PostResponse
 */
-
-type DefaultApiAddStatsRuleHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddStatsRuleHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, body StatsRule, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -1323,11 +1286,7 @@ func (a *DefaultApiService) AddStatsRuleHandler(ctx context.Context, xNextensioG
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -1623,18 +1582,12 @@ func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]str
 DefaultApiService add trace rule
 add trace rule
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddTraceRuleHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of TraceRule) - 
 @return PostResponse
 */
-
-type DefaultApiAddTraceRuleHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddTraceRuleHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, body TraceRule, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -1670,11 +1623,7 @@ func (a *DefaultApiService) AddTraceRuleHandler(ctx context.Context, xNextensioG
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -2087,18 +2036,12 @@ func (a *DefaultApiService) AddUserAttrMultiple(ctx context.Context, body []inte
 DefaultApiService add API key
 add API key
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddUserKeyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of UserKey) - 
 @return UserKeyResponse
 */
-
-type DefaultApiAddUserKeyOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddUserKey(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddUserKeyOpts) (UserKeyResponse, *http.Response, error) {
+func (a *DefaultApiService) AddUserKey(ctx context.Context, body UserKey, xNextensioGroup string, tenantId string) (UserKeyResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -2134,11 +2077,7 @@ func (a *DefaultApiService) AddUserKey(ctx context.Context, xNextensioGroup stri
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -2210,18 +2149,12 @@ func (a *DefaultApiService) AddUserKey(ctx context.Context, xNextensioGroup stri
 DefaultApiService add bundle rule
 add bundle rule
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddbundleRuleHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of BundleRule) - 
 @return PostResponse
 */
-
-type DefaultApiAddbundleRuleHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddbundleRuleHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, body BundleRule, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -2257,11 +2190,7 @@ func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensio
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -2333,18 +2262,12 @@ func (a *DefaultApiService) AddbundleRuleHandler(ctx context.Context, xNextensio
 DefaultApiService add host rule
 add host rule
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
- * @param optional nil or *DefaultApiAddhostRuleHandlerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of HostRule) - 
 @return PostResponse
 */
-
-type DefaultApiAddhostRuleHandlerOpts struct {
-    Body optional.Interface
-}
-
-func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGroup string, tenantId string, localVarOptionals *DefaultApiAddhostRuleHandlerOpts) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, body HostRule, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -2380,11 +2303,7 @@ func (a *DefaultApiService) AddhostRuleHandler(ctx context.Context, xNextensioGr
 	}
 	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {

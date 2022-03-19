@@ -236,7 +236,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddClusterHandler**
-> PostResponse AddClusterHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddClusterHandler(ctx, body, xNextensioGroup, tenantId)
 add gateway cluster to tenant
 
 add gateway cluster to tenant
@@ -246,17 +246,9 @@ add gateway cluster to tenant
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**TenantCluster**](TenantCluster.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddClusterHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddClusterHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of TenantCluster**](TenantCluster.md)|  | 
 
 ### Return type
 
@@ -303,7 +295,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddIdpHandler**
-> PostResponse AddIdpHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddIdpHandler(ctx, body, xNextensioGroup, tenantId)
 add identity provider to tenant
 
 add identity provider to tenant
@@ -313,17 +305,9 @@ add identity provider to tenant
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**AddIdp**](AddIdp.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddIdpHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddIdpHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of AddIdp**](AddIdp.md)|  | 
 
 ### Return type
 
@@ -400,7 +384,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddPolicyHandler**
-> PostResponse AddPolicyHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddPolicyHandler(ctx, body, xNextensioGroup, tenantId)
 add policy
 
 add policy
@@ -410,17 +394,9 @@ add policy
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**AddPolicy**](AddPolicy.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddPolicyHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddPolicyHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of AddPolicy**](AddPolicy.md)|  | 
 
 ### Return type
 
@@ -438,7 +414,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddStatsRuleHandler**
-> PostResponse AddStatsRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddStatsRuleHandler(ctx, body, xNextensioGroup, tenantId)
 add stats rule
 
 add stats rule
@@ -448,17 +424,9 @@ add stats rule
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**StatsRule**](StatsRule.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddStatsRuleHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddStatsRuleHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of StatsRule**](StatsRule.md)|  | 
 
 ### Return type
 
@@ -535,7 +503,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddTraceRuleHandler**
-> PostResponse AddTraceRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddTraceRuleHandler(ctx, body, xNextensioGroup, tenantId)
 add trace rule
 
 add trace rule
@@ -545,17 +513,9 @@ add trace rule
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**TraceRule**](TraceRule.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddTraceRuleHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddTraceRuleHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of TraceRule**](TraceRule.md)|  | 
 
 ### Return type
 
@@ -664,7 +624,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddUserKey**
-> UserKeyResponse AddUserKey(ctx, xNextensioGroup, tenantId, optional)
+> UserKeyResponse AddUserKey(ctx, body, xNextensioGroup, tenantId)
 add API key
 
 add API key
@@ -674,17 +634,9 @@ add API key
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**UserKey**](UserKey.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddUserKeyOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddUserKeyOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of UserKey**](UserKey.md)|  | 
 
 ### Return type
 
@@ -702,7 +654,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddbundleRuleHandler**
-> PostResponse AddbundleRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddbundleRuleHandler(ctx, body, xNextensioGroup, tenantId)
 add bundle rule
 
 add bundle rule
@@ -712,17 +664,9 @@ add bundle rule
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**BundleRule**](BundleRule.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddbundleRuleHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddbundleRuleHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of BundleRule**](BundleRule.md)|  | 
 
 ### Return type
 
@@ -740,7 +684,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **AddhostRuleHandler**
-> PostResponse AddhostRuleHandler(ctx, xNextensioGroup, tenantId, optional)
+> PostResponse AddhostRuleHandler(ctx, body, xNextensioGroup, tenantId)
 add host rule
 
 add host rule
@@ -750,17 +694,9 @@ add host rule
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**HostRule**](HostRule.md)|  | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
- **optional** | ***DefaultApiAddhostRuleHandlerOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DefaultApiAddhostRuleHandlerOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **body** | [**optional.Interface of HostRule**](HostRule.md)|  | 
 
 ### Return type
 
