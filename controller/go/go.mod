@@ -1,4 +1,4 @@
-module nextensio/apis
+module gitlab.com/nextensio/apis/controller/go
 
 go 1.17
 
