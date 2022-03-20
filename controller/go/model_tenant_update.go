@@ -12,4 +12,5 @@ package swagger
 type TenantUpdate struct {
 	Id string `json:"_id"`
 	Name string `json:"name"`
+	Easymode bool `json:"easymode,omitempty"`
 }

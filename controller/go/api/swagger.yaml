@@ -3852,6 +3852,8 @@ components:
           type: string
         name:
           type: string
+        easymode:
+          type: boolean
     tenant:
       required:
       - Result
