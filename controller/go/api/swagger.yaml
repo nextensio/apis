@@ -3690,6 +3690,10 @@ components:
           type: string
         name:
           type: string
+        pod:
+          type: integer
+        gateway:
+          type: string
     userDetails:
       title: Result
       required:

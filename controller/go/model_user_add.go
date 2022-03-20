@@ -12,4 +12,6 @@ package swagger
 type UserAdd struct {
 	Uid string `json:"uid"`
 	Name string `json:"name"`
+	Pod int32 `json:"pod,omitempty"`
+	Gateway string `json:"gateway,omitempty"`
 }
