@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**AddClientid**](DefaultApi.md#AddClientid) | **Post** /global/add/clientid | Add a new clientID for a new nextensio App
 [**AddClusterHandler**](DefaultApi.md#AddClusterHandler) | **Post** /tenant/{tenant-id}/add/tenantcluster | add gateway cluster to tenant
 [**AddGateway**](DefaultApi.md#AddGateway) | **Post** /global/add/gateway | add a gateway
+[**AddHostAttr**](DefaultApi.md#AddHostAttr) | **Post** /tenant/{tenant-id}/add/hostattr | add tenant host attrs
 [**AddIdpHandler**](DefaultApi.md#AddIdpHandler) | **Post** /tenant/{tenant-id}/add/idp | add identity provider to tenant
 [**AddKeepAlive**](DefaultApi.md#AddKeepAlive) | **Post** /global/add/keepaliverequest | Send keepalive from device to controller
 [**AddMgdTenant**](DefaultApi.md#AddMgdTenant) | **Post** /tenant/{tenant-id}/add/tenantmsp/{mgdtenant} | assign a managed tenant to a MSP tenant
@@ -189,7 +190,7 @@ Add attributes to the bundle of a tenant.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**map[string]interface{}**](map.md)| provide user attributes to be added/updated | 
+  **body** | [**map[string]interface{}**](map.md)| provide bundle attributes to be added/updated | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
 
@@ -309,6 +310,36 @@ Name | Type | Description  | Notes
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**GatewayStruct**](GatewayStruct.md)| provide info about gateway | 
   **xNextensioGroup** | **string**|  | 
+
+### Return type
+
+[**PostResponse**](postResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AddHostAttr**
+> PostResponse AddHostAttr(ctx, body, xNextensioGroup, tenantId)
+add tenant host attrs
+
+Add attributes to the host in a tenant.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**map[string]interface{}**](map.md)| provide host attributes to be added/updated | 
+  **xNextensioGroup** | **string**|  | 
+  **tenantId** | **string**| provide tenant ID | 
 
 ### Return type
 
@@ -1462,7 +1493,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllHostAttr**
-> []AttrStruct GetAllHostAttr(ctx, xNextensioGroup, tenantId)
+> []interface{} GetAllHostAttr(ctx, xNextensioGroup, tenantId)
 get all host attrs
 
 Retrieve all host attributes defined by the admins.
@@ -1477,7 +1508,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]AttrStruct**](array.md)
+[**[]interface{}**](array.md)
 
 ### Authorization
 
@@ -1696,7 +1727,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllUserAttr**
-> []AttrStruct GetAllUserAttr(ctx, xNextensioGroup, tenantId)
+> []interface{} GetAllUserAttr(ctx, xNextensioGroup, tenantId)
 get all user attrs
 
 Retrieve all user attributes defined by the admins.
@@ -1711,7 +1742,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]AttrStruct**](array.md)
+[**[]interface{}**](array.md)
 
 ### Authorization
 
@@ -1960,7 +1991,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetHostAttr**
-> AttrStruct GetHostAttr(ctx, xNextensioGroup, tenantId, host)
+> map[string]interface{} GetHostAttr(ctx, xNextensioGroup, tenantId, host)
 get host attrs
 
 Retrieve host attributes defined by the admins.
@@ -1976,7 +2007,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AttrStruct**](attrStruct.md)
+[**map[string]interface{}**](map.md)
 
 ### Authorization
 
@@ -2284,7 +2315,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetUserAttr**
-> AttrStruct GetUserAttr(ctx, xNextensioGroup, tenantId, userId)
+> map[string]interface{} GetUserAttr(ctx, xNextensioGroup, tenantId, userId)
 get user attrs
 
 Retrieve user attributes defined by the admins.
@@ -2300,7 +2331,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AttrStruct**](attrStruct.md)
+[**map[string]interface{}**](map.md)
 
 ### Authorization
 

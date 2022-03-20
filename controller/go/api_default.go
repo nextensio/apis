@@ -367,7 +367,7 @@ func (a *DefaultApiService) AddBundle(ctx context.Context, body BundleStruct, xN
 DefaultApiService add tenant bundle attrs
 Add attributes to the bundle of a tenant.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body provide user attributes to be added/updated
+ * @param body provide bundle attributes to be added/updated
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
 @return PostResponse
@@ -830,6 +830,119 @@ func (a *DefaultApiService) AddGateway(ctx context.Context, body GatewayStruct, 
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/global/add/gateway"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	localVarHeaderParams["X-Nextensio-Group"] = parameterToString(xNextensioGroup, "")
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["X-Nextensio-Key"] = key
+			
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v PostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 401 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
+DefaultApiService add tenant host attrs
+Add attributes to the host in a tenant.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body provide host attributes to be added/updated
+ * @param xNextensioGroup
+ * @param tenantId provide tenant ID
+@return PostResponse
+*/
+func (a *DefaultApiService) AddHostAttr(ctx context.Context, body map[string]interface{}, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue PostResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/tenant/{tenant-id}/add/hostattr"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenant-id"+"}", fmt.Sprintf("%v", tenantId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5020,15 +5133,15 @@ Retrieve all host attributes defined by the admins.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
-@return []AttrStruct
+@return []interface{}
 */
-func (a *DefaultApiService) GetAllHostAttr(ctx context.Context, xNextensioGroup string, tenantId string) ([]AttrStruct, *http.Response, error) {
+func (a *DefaultApiService) GetAllHostAttr(ctx context.Context, xNextensioGroup string, tenantId string) ([]interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []AttrStruct
+		localVarReturnValue []interface{}
 	)
 
 	// create path and map variables
@@ -5100,7 +5213,7 @@ func (a *DefaultApiService) GetAllHostAttr(ctx context.Context, xNextensioGroup 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []AttrStruct
+			var v []interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -5904,15 +6017,15 @@ Retrieve all user attributes defined by the admins.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
-@return []AttrStruct
+@return []interface{}
 */
-func (a *DefaultApiService) GetAllUserAttr(ctx context.Context, xNextensioGroup string, tenantId string) ([]AttrStruct, *http.Response, error) {
+func (a *DefaultApiService) GetAllUserAttr(ctx context.Context, xNextensioGroup string, tenantId string) ([]interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []AttrStruct
+		localVarReturnValue []interface{}
 	)
 
 	// create path and map variables
@@ -5984,7 +6097,7 @@ func (a *DefaultApiService) GetAllUserAttr(ctx context.Context, xNextensioGroup 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []AttrStruct
+			var v []interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -6901,15 +7014,15 @@ Retrieve host attributes defined by the admins.
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
  * @param host provide host name
-@return AttrStruct
+@return map[string]interface{}
 */
-func (a *DefaultApiService) GetHostAttr(ctx context.Context, xNextensioGroup string, tenantId string, host string) (AttrStruct, *http.Response, error) {
+func (a *DefaultApiService) GetHostAttr(ctx context.Context, xNextensioGroup string, tenantId string, host string) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue AttrStruct
+		localVarReturnValue map[string]interface{}
 	)
 
 	// create path and map variables
@@ -6982,7 +7095,7 @@ func (a *DefaultApiService) GetHostAttr(ctx context.Context, xNextensioGroup str
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v AttrStruct
+			var v map[string]interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -8121,15 +8234,15 @@ Retrieve user attributes defined by the admins.
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
  * @param userId provide User ID
-@return AttrStruct
+@return map[string]interface{}
 */
-func (a *DefaultApiService) GetUserAttr(ctx context.Context, xNextensioGroup string, tenantId string, userId string) (AttrStruct, *http.Response, error) {
+func (a *DefaultApiService) GetUserAttr(ctx context.Context, xNextensioGroup string, tenantId string, userId string) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue AttrStruct
+		localVarReturnValue map[string]interface{}
 	)
 
 	// create path and map variables
@@ -8202,7 +8315,7 @@ func (a *DefaultApiService) GetUserAttr(ctx context.Context, xNextensioGroup str
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v AttrStruct
+			var v map[string]interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()

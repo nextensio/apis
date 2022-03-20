@@ -29,6 +29,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**AddClientid**](docs/DefaultApi.md#addclientid) | **Post** /global/add/clientid | Add a new clientID for a new nextensio App
 *DefaultApi* | [**AddClusterHandler**](docs/DefaultApi.md#addclusterhandler) | **Post** /tenant/{tenant-id}/add/tenantcluster | add gateway cluster to tenant
 *DefaultApi* | [**AddGateway**](docs/DefaultApi.md#addgateway) | **Post** /global/add/gateway | add a gateway
+*DefaultApi* | [**AddHostAttr**](docs/DefaultApi.md#addhostattr) | **Post** /tenant/{tenant-id}/add/hostattr | add tenant host attrs
 *DefaultApi* | [**AddIdpHandler**](docs/DefaultApi.md#addidphandler) | **Post** /tenant/{tenant-id}/add/idp | add identity provider to tenant
 *DefaultApi* | [**AddKeepAlive**](docs/DefaultApi.md#addkeepalive) | **Post** /global/add/keepaliverequest | Send keepalive from device to controller
 *DefaultApi* | [**AddMgdTenant**](docs/DefaultApi.md#addmgdtenant) | **Post** /tenant/{tenant-id}/add/tenantmsp/{mgdtenant} | assign a managed tenant to a MSP tenant
