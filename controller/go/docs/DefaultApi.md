@@ -483,7 +483,7 @@ add trace request
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**map[string]string**](map.md)| need &quot;traceid&quot; as a mandatory key | 
+  **body** | [**map[string]interface{}**](map.md)| need &quot;traceid&quot; as a mandatory key | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
 
@@ -573,7 +573,7 @@ Add attributes to the user of a tenant.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**map[string]string**](map.md)| provide user attributes to be added/updated | 
+  **body** | [**map[string]interface{}**](map.md)| provide user attributes to be added/updated | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provide tenant ID | 
   **userid** | **string**| provide User ID | 
@@ -1606,7 +1606,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllTraceReqs**
-> []map[string]string GetAllTraceReqs(ctx, xNextensioGroup, tenantId)
+> []map[string]interface{} GetAllTraceReqs(ctx, xNextensioGroup, tenantId)
 get info about all trace requests
 
 retrieves info about all trace requests for the Trace policy. The trace requests specify the criteria to be used to trace one or more matching flows.
@@ -1621,7 +1621,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]map[string]string**](array.md)
+[**[]map[string]interface{}**](array.md)
 
 ### Authorization
 

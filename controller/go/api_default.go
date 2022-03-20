@@ -1474,7 +1474,7 @@ add trace request
  * @param tenantId provide tenant ID
 @return PostResponse
 */
-func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddTraceReq(ctx context.Context, body map[string]interface{}, xNextensioGroup string, tenantId string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -1814,7 +1814,7 @@ Add attributes to the user of a tenant.
  * @param userid provide User ID
 @return PostResponse
 */
-func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]string, xNextensioGroup string, tenantId string, userid string) (PostResponse, *http.Response, error) {
+func (a *DefaultApiService) AddUserAttr(ctx context.Context, body map[string]interface{}, xNextensioGroup string, tenantId string, userid string) (PostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -5569,15 +5569,15 @@ retrieves info about all trace requests for the Trace policy. The trace requests
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param xNextensioGroup
  * @param tenantId provide tenant ID
-@return []map[string]string
+@return []map[string]interface{}
 */
-func (a *DefaultApiService) GetAllTraceReqs(ctx context.Context, xNextensioGroup string, tenantId string) ([]map[string]string, *http.Response, error) {
+func (a *DefaultApiService) GetAllTraceReqs(ctx context.Context, xNextensioGroup string, tenantId string) ([]map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []map[string]string
+		localVarReturnValue []map[string]interface{}
 	)
 
 	// create path and map variables
@@ -5649,7 +5649,7 @@ func (a *DefaultApiService) GetAllTraceReqs(ctx context.Context, xNextensioGroup
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []map[string]string
+			var v []map[string]interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()

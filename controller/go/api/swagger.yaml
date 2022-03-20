@@ -3973,7 +3973,7 @@ components:
         trreq:
           type: object
       additionalProperties:
-        type: string
+        type: object
       x-schema-name: TraceReq
     clientID:
       required:
@@ -4328,11 +4328,11 @@ components:
     userAttrSingle:
       type: object
       additionalProperties:
-        type: string
+        type: object
     traceReq:
       type: object
       additionalProperties:
-        type: string
+        type: object
     unAuthorized:
       type: string
       description: Error message when user is unauthorized to use this API.
