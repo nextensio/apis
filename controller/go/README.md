@@ -24,6 +24,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**AddAdminGroup**](docs/DefaultApi.md#addadmingroup) | **Post** /tenant/{tenant-id}/add/admgroups/{group} | add an admin groups to a tenant
 *DefaultApi* | [**AddAttrSet**](docs/DefaultApi.md#addattrset) | **Post** /tenant/{tenant-id}/add/attrset | define a new attribute
 *DefaultApi* | [**AddBundle**](docs/DefaultApi.md#addbundle) | **Post** /tenant/{tenant-id}/add/bundle | Add bundle.
+*DefaultApi* | [**AddBundleAttr**](docs/DefaultApi.md#addbundleattr) | **Post** /tenant/{tenant-id}/add/bundleattr | add tenant bundle attrs
 *DefaultApi* | [**AddCerts**](docs/DefaultApi.md#addcerts) | **Post** /global/add/cert | add certificate
 *DefaultApi* | [**AddClientid**](docs/DefaultApi.md#addclientid) | **Post** /global/add/clientid | Add a new clientID for a new nextensio App
 *DefaultApi* | [**AddClusterHandler**](docs/DefaultApi.md#addclusterhandler) | **Post** /tenant/{tenant-id}/add/tenantcluster | add gateway cluster to tenant

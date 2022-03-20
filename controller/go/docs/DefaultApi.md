@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**AddAdminGroup**](DefaultApi.md#AddAdminGroup) | **Post** /tenant/{tenant-id}/add/admgroups/{group} | add an admin groups to a tenant
 [**AddAttrSet**](DefaultApi.md#AddAttrSet) | **Post** /tenant/{tenant-id}/add/attrset | define a new attribute
 [**AddBundle**](DefaultApi.md#AddBundle) | **Post** /tenant/{tenant-id}/add/bundle | Add bundle.
+[**AddBundleAttr**](DefaultApi.md#AddBundleAttr) | **Post** /tenant/{tenant-id}/add/bundleattr | add tenant bundle attrs
 [**AddCerts**](DefaultApi.md#AddCerts) | **Post** /global/add/cert | add certificate
 [**AddClientid**](DefaultApi.md#AddClientid) | **Post** /global/add/clientid | Add a new clientID for a new nextensio App
 [**AddClusterHandler**](DefaultApi.md#AddClusterHandler) | **Post** /tenant/{tenant-id}/add/tenantcluster | add gateway cluster to tenant
@@ -161,6 +162,36 @@ Name | Type | Description  | Notes
   **body** | [**BundleStruct**](BundleStruct.md)| provide tenant info | 
   **xNextensioGroup** | **string**|  | 
   **tenantId** | **string**| provie tenant ID | 
+
+### Return type
+
+[**PostResponse**](postResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AddBundleAttr**
+> PostResponse AddBundleAttr(ctx, body, xNextensioGroup, tenantId)
+add tenant bundle attrs
+
+Add attributes to the bundle of a tenant.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**map[string]interface{}**](map.md)| provide user attributes to be added/updated | 
+  **xNextensioGroup** | **string**|  | 
+  **tenantId** | **string**| provide tenant ID | 
 
 ### Return type
 
@@ -1315,7 +1346,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllBundleAttr**
-> []AttrStruct GetAllBundleAttr(ctx, xNextensioGroup, tenantId)
+> []interface{} GetAllBundleAttr(ctx, xNextensioGroup, tenantId)
 get all bundle attrs
 
 Retrieve all bundle attributes defined by the admins.
@@ -1330,7 +1361,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]AttrStruct**](array.md)
+[**[]interface{}**](array.md)
 
 ### Authorization
 
@@ -1783,7 +1814,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetBundleAttr**
-> AttrStruct GetBundleAttr(ctx, xNextensioGroup, tenantId, bid)
+> map[string]interface{} GetBundleAttr(ctx, xNextensioGroup, tenantId, bid)
 get bundle attrs
 
 Retrieve bundle attributes defined by the admins.
@@ -1799,7 +1830,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AttrStruct**](attrStruct.md)
+[**map[string]interface{}**](map.md)
 
 ### Authorization
 

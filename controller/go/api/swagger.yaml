@@ -1196,6 +1196,47 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/bundleattr:
+    post:
+      summary: add tenant bundle attrs
+      description: Add attributes to the bundle of a tenant.
+      operationId: addBundleAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide user attributes to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bundleAttrSingle'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
   /tenant/{tenant-id}/get/bundleattr/{bid}:
     get:
       summary: get bundle attrs
@@ -1232,7 +1273,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/attrStruct'
+                $ref: '#/components/schemas/bundleAttrSingle'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -1266,7 +1307,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/allAttrs'
+                $ref: '#/components/schemas/bundleAttrMultiple'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -4321,6 +4362,16 @@ components:
       example:
         key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5h
         Result: ok or error message
+    bundleAttrSingle:
+      type: object
+      additionalProperties:
+        type: object
+      x-schema-name: bundleAttrSingle
+    bundleAttrMultiple:
+      type: array
+      items:
+        type: object
+      x-schema-name: bundleAttrMultiple
     userAttrMultiple:
       type: array
       items:
