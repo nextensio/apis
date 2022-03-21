@@ -3589,55 +3589,28 @@ components:
         cpodrepl: 1
     getBundleStruct:
       required:
+      - Bundle
       - Result
-      - bid
-      - connectid
-      - cpodrepl
-      - gateway
-      - name
-      - pod
-      - services
-      - sharedkey
       type: object
       properties:
         Result:
           type: string
           example: ok or error message
-        bid:
-          type: string
-          example: devApps
-        connectid:
-          type: string
-          example: tenant-devApps
-        cpodrepl:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: devApps
-        services:
-          type: array
-          items:
-            type: string
-            example: dev.app.com
-        gateway:
-          type: string
-        pod:
-          type: string
-        sharedKey:
-          type: string
+        Bundle:
+          $ref: '#/components/schemas/bundleStruct'
       example:
-        sharedKey: sharedKey
-        pod: pod
-        name: devApps
-        services:
-        - dev.app.com
-        - dev.app.com
-        bid: devApps
-        connectid: tenant-devApps
-        gateway: gateway
+        Bundle:
+          sharedKey: sharedKey
+          pod: pod
+          name: devApps
+          services:
+          - dev.app.com
+          - dev.app.com
+          bid: devApps
+          connectid: tenant-devApps
+          gateway: gateway
+          cpodrepl: 1
         Result: ok or error message
-        cpodrepl: 1
     OnboardResult:
       required:
       - Result
