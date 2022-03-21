@@ -3845,6 +3845,7 @@ components:
     tenantUpdate:
       required:
       - _id
+      - easymode
       - name
       type: object
       properties:
