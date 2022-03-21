@@ -1,0 +1,4495 @@
+openapi: 3.0.0
+info:
+  title: Controller APIs
+  description: APIs to act on Nextensio Controller
+  contact:
+    email: developer@nextensio.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://server.nextensio.net:8080/api/v1
+security:
+- ApiKey: []
+- BearerAuth:
+  - read
+  - write
+paths:
+  /tenant/{tenant-id}/get/mgdtenants:
+    get:
+      summary: get all tenant
+      description: allows a user to get details of an existing tenant
+      operationId: getMgdTenant
+      parameters:
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string which can be 'ok' or an error message.\
+            \ If ok, list of tenant follow the result."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tenantDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/get/allgateways:
+    get:
+      summary: lists all gateways
+      description: allows a user to retrieve all gateways available
+      operationId: getGateways
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: details of each gateway. Empty json string if error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allGateways'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/get/alltenants:
+    get:
+      summary: get all tenant
+      description: allows a user to retrieve all existing tenants
+      operationId: getTenants
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of tenants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tenantDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/tenant:
+    get:
+      summary: get a tenant
+      description: allows a user to get details of an existing tenant
+      operationId: getTenant
+      parameters:
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string which can be 'ok' or an error message.\
+            \ If ok, details of tenant follow the result."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tenant'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/del/tenant/{tenant-id}:
+    get:
+      summary: delete a tenant
+      description: allows a user to delete an existing tenant
+      operationId: delTenant
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/add/tenant:
+    post:
+      summary: add basic info for a tenant
+      description: allows a superuser or an MSP to add a new tenant or update an existing
+        one
+      operationId: addTenant
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide info about tenant
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tenantUpdate'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/user:
+    post:
+      summary: add user
+      description: allows an admin to add a user to the specified tenant
+      operationId: addUser
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide info about user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userAdd'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/user/{userid}:
+    get:
+      summary: get a user
+      description: allows an admin to get details of an existing user
+      operationId: getUser
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide user ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the user follow."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/user/{userid}:
+    get:
+      summary: delete a user
+      description: allows an admin to delete an existing user from the tenant
+      operationId: delUser
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide user ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, it means the user has been deleted."
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allusers:
+    get:
+      summary: get all the users of a tenant
+      description: allows an admin to get details of all users of a tenant
+      operationId: getAllUsers
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of user details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allUserDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/userstatus/{userid}:
+    get:
+      summary: get details about user devices and their status
+      description: allows an admin to get status of an existing user
+      operationId: getUserStatus
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide user ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the status of the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userStatus'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/add/cert:
+    post:
+      summary: add certificate
+      description: allows a user to add a Nextensio Certificate
+      operationId: addCerts
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide info about certificate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/certStruct'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/get/allcerts:
+    get:
+      summary: get all certificates
+      description: allows a user to get a Nextensio Certificate
+      operationId: getAllCerts
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Array of zero or more certificates.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allCerts'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/get/cert/{certid}:
+    get:
+      summary: get a certificate
+      description: allows a user to get a Nextensio Certificate
+      operationId: getCert
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: certid
+        in: path
+        description: Certificate ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the user follow."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certStructWithResult'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/del/cert/{certid}:
+    get:
+      summary: delete a certificate
+      description: allows a user to delete a Nextensio Certificate
+      operationId: delCert
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: certid
+        in: path
+        description: Certificate ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, it means the specified certificate has been deleted."
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/groupadms/{group}:
+    get:
+      summary: get all admins of a tenant group
+      description: allows an user to retrieve all available admin of a tenant group
+      operationId: getAdminForGroups
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: provide group name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns result string with 'ok' or an error message. If result
+            is ok then the requested data follows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admGroupsDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tenant:
+    post:
+      summary: add or modify a tenant
+      description: allows a tenant admin / MSP to modify certain parameters of an
+        existing tenant
+      operationId: modifyTenant
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide tenant info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tenantUpdate'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/get/onboard:
+    get:
+      summary: onboard a nextensio extender
+      description: Onboard Nextensio extender running on a user device and return
+        a set of parameters so that they can connect to a Nextensio gateway
+      operationId: onboard
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: information required by the extender to connect to a Nextensio
+            gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardResult'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/add/gateway:
+    post:
+      summary: add a gateway
+      description: allows a user to add a new gateway or update an existing one
+      operationId: addGateway
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide info about gateway
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gatewayStruct'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/del/gateway/{name}:
+    get:
+      summary: delete an unused nextensio gateway
+      description: allows a nextensio admin to delete a an unused Nextensio Gateway
+      operationId: delGateway
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Gateway name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, it means the specified gateway has been deleted."
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/alladmgroups:
+    get:
+      summary: get all admin groups of a tenant
+      description: allows an user to retrieve all available admin groups of a tenant
+      operationId: getAdminGroups
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns result string with 'ok' or an error message. If the\
+            \ result is 'ok', then the requested data follows"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admGroupsArray'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/admgroups/{group}:
+    post:
+      summary: add an admin groups to a tenant
+      description: allows an user to add an admin groups to a tenant
+      operationId: addAdminGroup
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: provide group ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/admgroups/{group}:
+    get:
+      summary: delete an admin group from a tenant
+      description: allows an user to delete an admin group from a tenant
+      operationId: delAdminGroup
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: provide group ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /noauth/signup:
+    post:
+      summary: allows a user to signup
+      description: "allows a new user to signup as an admin on behalf of a new tenant.\
+        \ Create a new tenant with one user, the user signing up, and create default\
+        \ policies and everything needed to get the tenant going."
+      operationId: signup
+      requestBody:
+        description: provide name of tenant and email id of user signing up
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signupDetails'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+  /tenant/{tenant-id}/get/attrhdr/{type}:
+    get:
+      summary: get the header of an attributes collection for a tenant
+      description: "allows a user to retrieve the header doc for an attributes collection.\
+        \ This collection may have a list of all the Users, Apps, or Appgroups with\
+        \ their attributes. The header doc provides info such as version, who last\
+        \ changed the collection and when."
+      operationId: getAttrCollectionHdr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: type
+        in: path
+        description: "provide attribute collection type. Value can be Users, AppGroups,\
+          \ or Apps."
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the header for the specified attribute collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataHdr'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/userattr/single/{userid}:
+    post:
+      summary: add tenant user attrs
+      description: Add attributes to the user of a tenant.
+      operationId: addUserAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide user attributes to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userAttrSingle'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/userattr/{user-id}:
+    get:
+      summary: get user attrs
+      description: Retrieve user attributes defined by the admins.
+      operationId: getUserAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: user-id
+        in: path
+        description: provide User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the user attributes follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userAttrSingle'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/alluserattr:
+    get:
+      summary: get all user attrs
+      description: Retrieve all user attributes defined by the admins.
+      operationId: getAllUserAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of user attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userAttrMultiple'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/bundle:
+    post:
+      summary: Add bundle.
+      description: Add bundle to the specified tenant
+      operationId: addBundle
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provie tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide tenant info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bundleStruct'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/bundle/{bid}:
+    get:
+      summary: get bundle info of a tenant
+      description: Retrieve bundle info.
+      operationId: getBundle
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provie tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: provie bundle ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, the bundle has been deleted ."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getBundleStruct'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/bundle/{bid}:
+    get:
+      summary: del bundle from the tenant
+      description: Delete the bundle from the specified tenant
+      operationId: delBundle
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provie tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: provie bundle ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the bundle follows."
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allbundles:
+    get:
+      summary: get all bundles
+      description: Retrieve all bundles.
+      operationId: getAllBundles
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provie tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of bundles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allBundles'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/bundleattr:
+    post:
+      summary: add tenant bundle attrs
+      description: Add attributes to the bundle of a tenant.
+      operationId: addBundleAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide bundle attributes to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bundleAttrSingle'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/bundleattr/{bid}:
+    get:
+      summary: get bundle attrs
+      description: Retrieve bundle attributes defined by the admins.
+      operationId: getBundleAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: provide bundle ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the bundle attributes follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bundleAttrSingle'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allbundleattr:
+    get:
+      summary: get all bundle attrs
+      description: Retrieve all bundle attributes defined by the admins.
+      operationId: getAllBundleAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of user attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bundleAttrMultiple'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/hostattr:
+    post:
+      summary: add tenant host attrs
+      description: Add attributes to the host in a tenant.
+      operationId: addHostAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide host attributes to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/hostAttrSingle'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/hostattr/{host}:
+    get:
+      summary: get host attrs
+      description: Retrieve host attributes defined by the admins.
+      operationId: getHostAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: host
+        in: path
+        description: provide host name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the host attributes follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hostAttrSingle'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allhostattr:
+    get:
+      summary: get all host attrs
+      description: Retrieve all host attributes defined by the admins.
+      operationId: getAllHostAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns an array of host attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hostAttrMultiple'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/bundlestatus/{bid}:
+    get:
+      summary: get the status of every instance of a specific AppGroup extender for
+        a tenant
+      description: allows a user to retrieve the status of all instances of an AppGroup
+        extender based on the extender ID
+      operationId: getBundleStatus
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: provide AppGroup extender unique ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the status for all instances of the specified AppGroup
+            extender.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bundleStatus'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/user/adminrole/{userid}:
+    get:
+      summary: get the admin role of a user
+      description: allows to retrieve a user's admin role
+      operationId: getUserAdminRole
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide userid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the admin role string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adminrole'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/alltenantclusters:
+    get:
+      summary: get all clusters assigned for a tenant
+      description: allows to retrieve info of all clusters assigned to a tenant
+      operationId: getAllTenantCluster
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the tenant cluster information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allTenantclusters'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/tenantcluster/{gateway}:
+    get:
+      summary: get the  gateway information (nextensio internal) for a gateway assined
+        to a tenant
+      description: allows to retrieve a tenants gateway internal information
+      operationId: getTenantCluster
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: gateway
+        in: path
+        description: provide gateway name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the gateway internal information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTenantcluster'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allgateways:
+    get:
+      summary: lists all gateways allocated for a tenant
+      description: allows a tenant user to retrieve all gateways allocated to the
+        tenant
+      operationId: getTenantGateways
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: details of each gateway. Empty json string if error or no gateways
+            allocated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allGateways'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allidps:
+    get:
+      summary: get all IDPs for a tenant
+      description: allows a tenant user to retrieve all IDPs
+      operationId: getAllIdps
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: if error returns "Cant find tenant" otherwise return null or
+            IDP info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/idpStruct'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/onboardlog/{userid}:
+    get:
+      summary: get a user's onboarding info
+      description: retrieves info about a user's last attempt to onboard to a Nextensio
+        gateway
+      operationId: getUserOnboardLog
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide user id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns result string with 'ok' or an error message. If result
+            is ok then the requested data follows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardLogDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/tracereq/{traceid}:
+    get:
+      summary: get info about a trace request
+      description: retrieves info about a trace request for the Trace policy. The
+        trace request specifies the criteria to be used to trace one or more matching
+        flows.
+      operationId: getTraceReq
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: traceid
+        in: path
+        description: "provide trace id, which is any user defined ID for a trace request"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns result string with 'ok' or an error message. If result
+            is ok then the requested data follows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceReqDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/alltracereq:
+    get:
+      summary: get info about all trace requests
+      description: retrieves info about all trace requests for the Trace policy. The
+        trace requests specify the criteria to be used to trace one or more matching
+        flows.
+      operationId: getAllTraceReqs
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns an array of objects where each object represents the\
+            \ trace request that contains the set of attributes with their match criteria.\
+            \ In case of error, an empty array is returned."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllTraceReqDetails'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tenanttype/{type}:
+    post:
+      summary: change the type of a tenant
+      description: allows a superadmin to change the type of a tenant
+      operationId: updTenantType
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: type
+        in: path
+        description: "provide type of tenant - self-managed, MSP-managed or MSP"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tenantmsp/{mgdtenant}:
+    post:
+      summary: assign a managed tenant to a MSP tenant
+      description: allows a superadmin to assign a managed tenant to a MSP tenant
+      operationId: addMgdTenant
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mgdtenant
+        in: path
+        description: provide ID of a managed tenant
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/tenantmsp/{mgdtenant}:
+    get:
+      summary: remove a managed tenant from a MSP tenant
+      description: allows a superadmin to delete a managed tenant from a MSP tenant
+      operationId: delMgdTenant
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mgdtenant
+        in: path
+        description: provide ID of a managed tenant
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/user/adminrole/{userid}/{role}:
+    post:
+      summary: assign a new role for a user
+      description: "allows a superadmin or tenant admin to assign a user to a new\
+        \ role. The new role may be that of a tenant or group admin or that of a regular\
+        \ user. For eg., a regular user can be made a group admin or an overall admin\
+        \ or vice-versa, or a group admin can be made an overall admin or vice-versa."
+      operationId: updUserRole
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: provide ID of user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: role
+        in: path
+        description: "provide new role. Valid values are regular, admin, or groupname-admin"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/attrset:
+    post:
+      summary: define a new attribute
+      description: "allows any admin to add a new attribute. The attribute can be\
+        \ for a user, an App, or an AppGroup."
+      operationId: addAttrSet
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide details of attribute to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/attrSetStruct'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/attrset:
+    post:
+      summary: delete an existing attribute
+      description: "allows any admin to delete an existing attribute. The attribute\
+        \ can be for a user, an App, or an AppGroup."
+      operationId: delAttrSet
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide details of attribute to be deleted
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/attrSetStruct'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/tracereqhdr:
+    get:
+      summary: get the header of a trace requests collection for a tenant
+      description: "allows a user to retrieve the header doc for a trace requests\
+        \ collection. The header doc provides info such as version, who last changed\
+        \ the collection and when."
+      operationId: getTraceRequestsHdr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the header for the trace requests collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataHdr'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /noauth/clientid/{key}:
+    get:
+      summary: get the clientid providing the proper key/password
+      description: "ask for the IDP clientID for nextensio app, key/password protected."
+      operationId: getClientId
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: key/password.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the clientID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clientID'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/add/keepaliverequest:
+    post:
+      summary: Send keepalive from device to controller
+      description: Send keepalive from user device to nextensio controller
+      operationId: addKeepAlive
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide details of attribute to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/keepaliveReq'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/schemas/keepaliveResp'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /global/add/clientid:
+    post:
+      summary: Add a new clientID for a new nextensio App
+      description: Add new clientID for new nextensio App
+      operationId: addClientid
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide details of attribute to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addClientID'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/userattr/multiple:
+    post:
+      summary: add tenant user attrs for multiple users
+      description: add tenant user attrs for multiple users
+      operationId: addUserAttrMultiple
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: provide user attributes to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userAttrMultiple'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/idp:
+    post:
+      summary: add identity provider to tenant
+      description: add identity provider to tenant
+      operationId: addIdpHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addIDP'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/idp/{idp}:
+    get:
+      summary: delete an IDP
+      description: delete a tenant's IDP
+      operationId: delIdpHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: idp
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/hostattr/{host}:
+    get:
+      summary: delete host attrs
+      description: Delete host attributes defined by the admins.
+      operationId: delHostAttr
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: host
+        in: path
+        description: provide host name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tenantcluster:
+    post:
+      summary: add gateway cluster to tenant
+      description: add gateway cluster to tenant
+      operationId: addClusterHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tenantCluster'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/tenantcluster/{gateway}:
+    get:
+      summary: delete host attrs
+      description: Delete tenant cluster.
+      operationId: delTenantCluster
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: gateway
+        in: path
+        description: gateway name like gatewaydosfo3.nextensio.net
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/onboardlog/{userid}:
+    get:
+      summary: delete onboard logs for a particluar user
+      description: delete onboard logs for a particluar user
+      operationId: delOnboardLogs
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userid
+        in: path
+        description: user id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the host attributes follows."
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tracereq:
+    post:
+      summary: add trace request
+      description: add trace request
+      operationId: addTraceReq
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: need "traceid" as a mandatory key
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/traceReq'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/policy/{policyid}:
+    get:
+      summary: get policy given the policyid
+      description: get policy given the policyid
+      operationId: getPolicy
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: policyid
+        in: path
+        description: trace id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the policy  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getPolicyStruct'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/allpolicies:
+    get:
+      summary: get all policies in a tenant
+      description: get all policies in a tenant
+      operationId: getAllPolicies
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the policy  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAllPolicies'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/policy:
+    post:
+      summary: add policy
+      description: add policy
+      operationId: addPolicyHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addPolicy'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/policy/{policyid}:
+    get:
+      summary: delete policy
+      description: delete policy
+      operationId: delPolicy
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: policyid
+        in: path
+        description: policy id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/bundlerule:
+    post:
+      summary: add bundle rule
+      description: add bundle rule
+      operationId: addbundleRuleHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bundleRule'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/bundlerules/{bid}:
+    get:
+      summary: get all bundle rules in a tenant
+      description: get all bundle rules in a tenant
+      operationId: getAllBundleRules
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: bundle ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the bundle rule  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allBundleRules'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/hostrule/{host}/{rid}/{group}:
+    get:
+      summary: delete host rule
+      description: delete host rule
+      operationId: delHostRule
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: host
+        in: path
+        description: host id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: rid
+        in: path
+        description: rule id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: group id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/hostrule:
+    post:
+      summary: add host rule
+      description: add host rule
+      operationId: addhostRuleHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/hostRule'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/hostrules/{host}:
+    get:
+      summary: get all host rules in a tenant
+      description: get all host rules in a tenant
+      operationId: getAllHostRules
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: host
+        in: path
+        description: host ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the host rule  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allHostRules'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/bundlerule/{bid}/{rid}/{group}:
+    get:
+      summary: delete bundle rule
+      description: delete bundle rule
+      operationId: delBundleRule
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: bid
+        in: path
+        description: bundle id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: rid
+        in: path
+        description: rule id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: group id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/tracereqrule:
+    post:
+      summary: add trace rule
+      description: add trace rule
+      operationId: addTraceRuleHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/traceRule'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/tracereqrule/{rid}/{group}:
+    get:
+      summary: delete trace request
+      description: delete trace request
+      operationId: delTraceReq
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: rid
+        in: path
+        description: rule id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: group id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/tracereqrules/{traceid}:
+    get:
+      summary: get all trace rules in a tenant
+      description: get all trace rules in a tenant
+      operationId: getAllTraceRules
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: traceid
+        in: path
+        description: trace ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the trace rule  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allTraceRules'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/statsrule:
+    post:
+      summary: add stats rule
+      description: add stats rule
+      operationId: addStatsRuleHandler
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/statsRule'
+        required: true
+      responses:
+        "200":
+          description: Post API returned ok or an error string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/statsrule/{group}:
+    get:
+      summary: delete stats rule
+      description: delete stats rule
+      operationId: delStatsRule
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: group
+        in: path
+        description: group id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/statsrule:
+    get:
+      summary: get all stats rules in a tenant
+      description: get all stats rules in a tenant
+      operationId: getAllStatsRules
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the stats rule  follows."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allStatsRules'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/get/alluserkeys:
+    get:
+      summary: get all the API keys in the tenant
+      description: get all the API keys in the tenant
+      operationId: getUserKeys
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns a result string with 'ok' or an error message. If\
+            \ ok, details of the keys follow."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userKeys'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/del/userkey/{key}:
+    get:
+      summary: delete API key
+      description: delete API key
+      operationId: delUserKey
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: key name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+  /tenant/{tenant-id}/add/userkey:
+    post:
+      summary: add API key
+      description: add API key
+      operationId: addUserKey
+      parameters:
+      - name: X-Nextensio-Group
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: tenant-id
+        in: path
+        description: provide tenant ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userKey'
+        required: true
+      responses:
+        "200":
+          description: Returns a result string with 'ok' or an error message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userKeyResponse'
+        "401":
+          description: User is unauthorized to use this API
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unAuthorized'
+components:
+  schemas:
+    idpStruct:
+      required:
+      - Audience
+      - Auth
+      - Cert
+      - Client
+      - Domain
+      - Group
+      - Idp
+      - Issuer
+      - Jwks
+      - Keyid
+      - Name
+      - Policy
+      - Provider
+      - Secret
+      - Sso
+      - Token
+      type: object
+      properties:
+        Provider:
+          type: string
+          example: Open ID Connect
+        Name:
+          type: string
+          example: foo
+        Idp:
+          type: string
+          example: idp string
+        Policy:
+          type: string
+          example: policy string
+        Domain:
+          type: string
+          example: foo.com
+        Group:
+          type: string
+          example: Group string
+        Auth:
+          type: string
+          example: https://www.foo.com/dialog/oauth
+        Jwks:
+          type: string
+          example: ""
+        Token:
+          type: string
+          example: token string
+        Issuer:
+          type: string
+          example: Issuer name
+        Sso:
+          type: string
+          example: sso
+        Audience:
+          type: string
+          example: ""
+        Client:
+          type: string
+          example: client name
+        Secret:
+          type: string
+          example: secret
+        Cert:
+          type: string
+          example: certificate string
+        Keyid:
+          type: string
+          example: keyid string
+      example:
+        Policy: policy string
+        Group: Group string
+        Issuer: Issuer name
+        Audience: ""
+        Token: token string
+        Keyid: keyid string
+        Sso: sso
+        Provider: Open ID Connect
+        Name: foo
+        Secret: secret
+        Idp: idp string
+        Jwks: ""
+        Auth: https://www.foo.com/dialog/oauth
+        Cert: certificate string
+        Domain: foo.com
+        Client: client name
+    getTenantcluster:
+      required:
+      - Result
+      - apodrepl
+      - apodsets
+      - gateway
+      - id
+      - image
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        id:
+          type: string
+          example: gatewaydosfo3
+        image:
+          type: string
+          example: nextensio/minion:latest
+        apodrepl:
+          type: integer
+          example: 1
+        apodsets:
+          type: integer
+          example: 2
+      example:
+        image: nextensio/minion:latest
+        apodsets: 2
+        id: gatewaydosfo3
+        Result: ok or an error message
+        apodrepl: 1
+    tenantCluster:
+      required:
+      - apodrepl
+      - apodsets
+      - gateway
+      - id
+      - image
+      type: object
+      properties:
+        id:
+          type: string
+          example: gatewaydosfo3
+        gateway:
+          type: string
+          example: gatewaydosfo3.nextensio.net
+        image:
+          type: string
+          example: nextensio/minion:latest
+        apodrepl:
+          type: integer
+          example: 1
+        apodsets:
+          type: integer
+          example: 1
+    allTenantclusters:
+      type: array
+      items:
+        $ref: '#/components/schemas/getTenantcluster'
+      x-schema-name: allTenantclusters
+    adminrole:
+      required:
+      - Result
+      - UserRole
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        UserRole:
+          type: string
+          example: User's admin role
+      example:
+        UserRole: User's admin role
+        Result: ok or an error message
+    signupDetails:
+      required:
+      - email
+      - ismsp
+      - tenant
+      type: object
+      properties:
+        tenant:
+          type: string
+          example: nextensio
+        email:
+          type: string
+          example: joemoe@gmail.com
+        ismsp:
+          type: boolean
+          example: true
+    allAttrs:
+      type: array
+      items:
+        $ref: '#/components/schemas/attrStruct'
+    attrStruct:
+      required:
+      - appliesTo
+      - group
+      - isArray
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          example: employeeLevel
+        appliesTo:
+          type: string
+          example: Users
+        type:
+          type: string
+          example: String
+        isArray:
+          type: string
+          example: "true"
+        group:
+          type: string
+          example: admin
+    admGroupsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/admGroupsDetails'
+      x-schema-name: admGroupsArray
+    allGateways:
+      type: array
+      items:
+        $ref: '#/components/schemas/gatewayStruct'
+      x-schema-name: allGateways
+    gatewayStruct:
+      required:
+      - location
+      - name
+      - provider
+      - region
+      - zone
+      type: object
+      properties:
+        name:
+          type: string
+          example: gateway-sf-do
+        location:
+          type: string
+          example: sanfrancisco
+        zone:
+          type: string
+          example: california
+        region:
+          type: string
+          example: us-west
+        provider:
+          type: string
+          example: digital ocean
+      example:
+        zone: california
+        provider: digital ocean
+        name: gateway-sf-do
+        location: sanfrancisco
+        region: us-west
+    allBundles:
+      type: array
+      items:
+        $ref: '#/components/schemas/bundleStruct'
+      x-schema-name: allBundles
+    bundleStruct:
+      required:
+      - bid
+      - cpodrepl
+      - name
+      - pod
+      - services
+      type: object
+      properties:
+        bid:
+          type: string
+          example: devApps
+        connectid:
+          type: string
+          example: tenant-devApps
+        cpodrepl:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: devApps
+        services:
+          type: array
+          items:
+            type: string
+            example: dev.app.com
+        gateway:
+          type: string
+        pod:
+          type: string
+        sharedKey:
+          type: string
+      example:
+        sharedKey: sharedKey
+        pod: pod
+        name: devApps
+        services:
+        - dev.app.com
+        - dev.app.com
+        bid: devApps
+        connectid: tenant-devApps
+        gateway: gateway
+        cpodrepl: 1
+    getBundleStruct:
+      required:
+      - Bundle
+      - Result
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or error message
+        Bundle:
+          $ref: '#/components/schemas/bundleStruct'
+      example:
+        Bundle:
+          sharedKey: sharedKey
+          pod: pod
+          name: devApps
+          services:
+          - dev.app.com
+          - dev.app.com
+          bid: devApps
+          connectid: tenant-devApps
+          gateway: gateway
+          cpodrepl: 1
+        Result: ok or error message
+    OnboardResult:
+      required:
+      - Result
+      - cacert
+      - cluster
+      - connectid
+      - domains
+      - gateway
+      - keepalive
+      - podname
+      - services
+      - splittunnel
+      - tenant
+      - userid
+      - version
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        userid:
+          type: string
+        tenant:
+          type: string
+        gateway:
+          type: string
+        domains:
+          $ref: '#/components/schemas/Domain'
+        connectid:
+          type: string
+        cluster:
+          type: string
+        podname:
+          type: string
+        cacert:
+          type: string
+        services:
+          type: array
+          items:
+            type: string
+        version:
+          type: string
+        keepalive:
+          type: integer
+        splittunnel:
+          type: boolean
+      example:
+        cluster: cluster
+        splittunnel: true
+        keepalive: 0
+        podname: podname
+        domains:
+          name: acme.com
+        services:
+        - services
+        - services
+        userid: userid
+        version: version
+        Result: ok or an error message
+        cacert: cacert
+        connectid: connectid
+        tenant: tenant
+        gateway: gateway
+    Domain:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: acme.com
+      example:
+        name: acme.com
+    admGroupsDetails:
+      title: Result
+      required:
+      - Result
+      - grpadmins
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        grpadmins:
+          type: array
+          items:
+            type: string
+            example: user@foobar.com
+      example:
+        grpadmins:
+        - user@foobar.com
+        - user@foobar.com
+        Result: ok or an error message
+    allCerts:
+      type: array
+      items:
+        $ref: '#/components/schemas/certStruct'
+      x-schema-name: allCerts
+    certStruct:
+      required:
+      - cert
+      - certid
+      type: object
+      properties:
+        certid:
+          type: string
+        cert:
+          type: array
+          items:
+            type: integer
+      example:
+        cert:
+        - 0
+        - 0
+        certid: certid
+    certStructWithResult:
+      required:
+      - Result
+      - cert
+      - certid
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        certid:
+          type: string
+        cert:
+          type: array
+          items:
+            type: integer
+      example:
+        cert:
+        - 0
+        - 0
+        certid: certid
+        Result: ok or an error message
+    attrSet:
+      type: array
+      items:
+        $ref: '#/components/schemas/attrSetStruct'
+    attrSetStruct:
+      required:
+      - appliesTo
+      - group
+      - isArray
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+        appliesTo:
+          type: string
+          example: Users or Bundles or Hosts (case sensitive)
+        type:
+          type: string
+          example: String or Number or Boolean (case sensitive)
+        isArray:
+          type: string
+          example: true or false
+        group:
+          type: string
+          example: devops or secops or netops or any tenant defined name
+    allUserDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/userDetails'
+      x-schema-name: allUserDetails
+    userAdd:
+      required:
+      - name
+      - uid
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        pod:
+          type: integer
+        gateway:
+          type: string
+    userDetails:
+      title: Result
+      required:
+      - Result
+      - connnectid
+      - email
+      - gateway
+      - name
+      - pod
+      - services
+      - uid
+      - usertype
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        uid:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        gateway:
+          type: string
+        usertype:
+          type: string
+        pod:
+          type: integer
+        connectid:
+          type: string
+        services:
+          type: array
+          items:
+            type: string
+      example:
+        uid: uid
+        pod: 0
+        name: name
+        usertype: usertype
+        services:
+        - services
+        - services
+        connectid: connectid
+        email: email
+        gateway: gateway
+        Result: ok or an error message
+    userStatus:
+      type: array
+      items:
+        $ref: '#/components/schemas/userStatusStruct'
+      x-schema-name: userStatus
+    userStatusStruct:
+      required:
+      - device
+      - gateway
+      - health
+      - source
+      type: object
+      properties:
+        device:
+          type: string
+        gateway:
+          type: string
+        source:
+          type: string
+        health:
+          type: string
+      example:
+        health: health
+        source: source
+        device: device
+        gateway: gateway
+    tenantUpdate:
+      required:
+      - _id
+      - easymode
+      - name
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        easymode:
+          type: boolean
+    tenant:
+      required:
+      - Result
+      - _id
+      - admgroups
+      - cfgvn
+      - domains
+      - easymode
+      - group
+      - idps
+      - mgdtenants
+      - mspid
+      - name
+      - splittunnel
+      - type
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        _id:
+          type: string
+        name:
+          type: string
+        group:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        easymode:
+          type: boolean
+        splittunnel:
+          type: boolean
+        cfgvn:
+          type: string
+        idps:
+          type: array
+          items:
+            type: string
+        admgroups:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        mspid:
+          type: string
+        mgdtenants:
+          type: array
+          items:
+            type: string
+      example:
+        splittunnel: true
+        domains:
+        - domains
+        - domains
+        easymode: true
+        type: type
+        Result: ok or an error message
+        idps:
+        - idps
+        - idps
+        mspid: mspid
+        mgdtenants:
+        - mgdtenants
+        - mgdtenants
+        admgroups:
+        - admgroups
+        - admgroups
+        name: name
+        _id: _id
+        group: group
+        cfgvn: cfgvn
+    tenantDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/tenant'
+      x-schema-name: tenantDetails
+    dataHdr:
+      required:
+      - ID
+      - changeat
+      - changeby
+      - majver
+      - minver
+      type: object
+      properties:
+        name:
+          type: string
+        appliesTo:
+          type: string
+          example: Users or Bundles or Hosts
+        type:
+          type: string
+          example: string or number or boolean
+        isArray:
+          type: string
+          example: true or false
+        group:
+          type: string
+          example: devops or secops or netops or any tenant defined name
+      example:
+        name: name
+        appliesTo: Users or Bundles or Hosts
+        isArray: true or false
+        type: string or number or boolean
+        group: devops or secops or netops or any tenant defined name
+    bundleStatus:
+      type: array
+      items:
+        $ref: '#/components/schemas/bundleStatusStruct'
+      x-schema-name: bundleStatus
+    bundleStatusStruct:
+      required:
+      - device
+      - gateway
+      - health
+      - source
+      type: object
+      properties:
+        device:
+          type: string
+        gateway:
+          type: string
+        source:
+          type: string
+        health:
+          type: string
+      example:
+        health: health
+        source: source
+        device: device
+        gateway: gateway
+    onboardLogDetails:
+      required:
+      - Result
+      - connectid
+      - count
+      - gw
+      - onbtime
+      - pod
+      - podnm
+      - prevtime
+      type: object
+      properties:
+        Result:
+          type: string
+        gw:
+          type: string
+        pod:
+          type: integer
+        podnm:
+          type: string
+        connectid:
+          type: string
+        onbtime:
+          type: string
+        count:
+          type: integer
+        prevtime:
+          type: string
+      example:
+        gw: gw
+        pod: 0
+        onbtime: onbtime
+        count: 6
+        prevtime: prevtime
+        podnm: podnm
+        connectid: connectid
+        Result: Result
+    TraceReqDetails:
+      required:
+      - Result
+      - trreq
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        trreq:
+          type: object
+      example:
+        trreq: {}
+        Result: ok or an error message
+    AllTraceReqDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/TraceReq'
+      x-schema-name: AllTraceReqDetails
+    TraceReq:
+      type: object
+      properties:
+        trreq:
+          type: object
+      additionalProperties:
+        type: object
+      x-schema-name: TraceReq
+    clientID:
+      required:
+      - Result
+      - clientid
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        clientid:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+      example:
+        clientid: 0obx7lncdeF0ABCfe4x6
+        Result: ok or an error message
+    addClientID:
+      required:
+      - clientid
+      type: object
+      properties:
+        clientid:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+    keepaliveResp:
+      required:
+      - Result
+      - clientid
+      - version
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or an error message
+        version:
+          type: string
+          example: "12345679018"
+        clientid:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+    keepaliveReq:
+      required:
+      - device
+      - gateway
+      - source
+      - version
+      type: object
+      properties:
+        gateway:
+          type: integer
+          example: 1234
+        device:
+          type: string
+          example: joebars-iphone
+        version:
+          type: string
+          example: "12345679018"
+        source:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+    addIDP:
+      required:
+      - audience
+      - auth
+      - cert
+      - client
+      - domain
+      - group
+      - idp
+      - issuer
+      - jwks
+      - keyid
+      - name
+      - policy
+      - provider
+      - secret
+      - sso
+      - token
+      type: object
+      properties:
+        provider:
+          type: string
+          example: GOOGLE
+        name:
+          type: string
+          example: my-google-idp
+        policy:
+          type: string
+          example: OAUTH
+        domain:
+          type: string
+          example: acme.com
+        group:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+        auth:
+          type: string
+          example: https://nextensio.okta.com/api/v1/auth
+        jwks:
+          type: string
+          example: https://nextensio.okta.com/api/v1/jwks
+        token:
+          type: string
+          example: https://nextensio.okta.com/api/v1/tokens
+        issuer:
+          type: string
+          example: https://nextensio.okta.com/api/v1/default
+        sso:
+          type: string
+          example: https://nextensio.okta.com/api/v1/sso
+        audience:
+          type: string
+          example: https://nextensio.okta.com
+        client:
+          type: string
+          example: 0obx7lncdeF0ABCfe4x6
+        secret:
+          type: string
+          example: foobar
+        cert:
+          type: string
+          example: PEM certificate
+        keyid:
+          type: string
+          example: <keyid>
+    policyStruct:
+      required:
+      - pid
+      - rego
+      type: object
+      properties:
+        pid:
+          type: string
+          example: AccessPolicy
+        rego:
+          type: array
+          example:
+          - 45
+          - 12
+          - 67
+          items:
+            type: integer
+      example:
+        pid: AccessPolicy
+        rego:
+        - 45
+        - 12
+        - 67
+    getPolicyStruct:
+      required:
+      - Result
+      - pid
+      - rego
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or error message
+        pid:
+          type: string
+          example: AccessPolicy
+        rego:
+          type: array
+          example:
+          - 45
+          - 12
+          - 67
+          items:
+            type: integer
+      example:
+        pid: AccessPolicy
+        rego:
+        - 45
+        - 12
+        - 67
+        Result: ok or error message
+    getAllPolicies:
+      type: array
+      items:
+        $ref: '#/components/schemas/policyStruct'
+      x-schema-name: getAllPolicies
+    addPolicy:
+      required:
+      - pid
+      - rego
+      type: object
+      properties:
+        pid:
+          type: string
+        rego:
+          type: array
+          items:
+            type: integer
+    bundleRule:
+      required:
+      - bid
+      - group
+      - rid
+      - rule
+      type: object
+      properties:
+        bid:
+          type: string
+        rid:
+          type: string
+        group:
+          type: string
+        rule:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      example:
+        rule:
+        - - rule
+          - rule
+        - - rule
+          - rule
+        bid: bid
+        rid: rid
+        group: group
+    allBundleRules:
+      type: array
+      items:
+        $ref: '#/components/schemas/bundleRule'
+      x-schema-name: allBundleRules
+    hostRule:
+      required:
+      - group
+      - host
+      - rid
+      - rule
+      type: object
+      properties:
+        host:
+          type: string
+        rid:
+          type: string
+        group:
+          type: string
+        rule:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      example:
+        host: host
+        rule:
+        - - rule
+          - rule
+        - - rule
+          - rule
+        rid: rid
+        group: group
+    allHostRules:
+      type: array
+      items:
+        $ref: '#/components/schemas/hostRule'
+      x-schema-name: allHostRules
+    traceRule:
+      required:
+      - group
+      - rid
+      - rule
+      type: object
+      properties:
+        rid:
+          type: string
+        group:
+          type: string
+        rule:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      example:
+        rule:
+        - - rule
+          - rule
+        - - rule
+          - rule
+        rid: rid
+        group: group
+    allTraceRules:
+      type: array
+      items:
+        $ref: '#/components/schemas/traceRule'
+      x-schema-name: allTraceRules
+    statsRule:
+      required:
+      - group
+      - rule
+      type: object
+      properties:
+        group:
+          type: string
+        rule:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+    allStatsRules:
+      type: array
+      items:
+        $ref: '#/components/schemas/traceRule'
+      x-schema-name: allStatsRules
+    userKey:
+      required:
+      - name
+      type: object
+    userKeys:
+      required:
+      - Result
+      - keys
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or error message
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/userKey'
+      example:
+        keys:
+        - {}
+        - {}
+        Result: ok or error message
+    userKeyResponse:
+      required:
+      - Result
+      - key
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or error message
+        key:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5h
+      example:
+        key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5h
+        Result: ok or error message
+    bundleAttrSingle:
+      type: object
+      additionalProperties:
+        type: object
+      x-schema-name: bundleAttrSingle
+    bundleAttrMultiple:
+      type: array
+      items:
+        type: object
+      x-schema-name: bundleAttrMultiple
+    userAttrMultiple:
+      type: array
+      items:
+        type: object
+      x-schema-name: userAttrMultiple
+    userAttrSingle:
+      type: object
+      additionalProperties:
+        type: object
+      x-schema-name: userAttrSingle
+    hostAttrSingle:
+      type: object
+      additionalProperties:
+        type: object
+      x-schema-name: hostAttrSingle
+    hostAttrMultiple:
+      type: array
+      items:
+        type: object
+      x-schema-name: hostAttrMultiple
+    traceReq:
+      type: object
+      additionalProperties:
+        type: object
+    unAuthorized:
+      type: string
+      description: Error message when user is unauthorized to use this API.
+      example: 401 - You are not authorized for this request
+    postResponse:
+      required:
+      - Result
+      type: object
+      properties:
+        Result:
+          type: string
+          description: Result of the operation is "ok" or an error message.
+          example: ok
+      example:
+        Result: ok
+  responses:
+    unAuthorized:
+      description: User is unauthorized to use this API
+      content:
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/unAuthorized'
+    postResponse:
+      description: Post API returned ok or an error string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/postResponse'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      name: X-Nextensio-Key
+      in: header
+    BearerAuth:
+      type: http
+      scheme: bearer
