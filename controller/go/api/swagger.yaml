@@ -1111,7 +1111,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bundleStruct'
+                $ref: '#/components/schemas/getBundleStruct'
         "401":
           description: User is unauthorized to use this API
           content:
@@ -3586,6 +3586,54 @@ components:
         bid: devApps
         connectid: tenant-devApps
         gateway: gateway
+        cpodrepl: 1
+    getBundleStruct:
+      required:
+      - Result
+      - bid
+      - cpodrepl
+      - name
+      - pod
+      - services
+      type: object
+      properties:
+        Result:
+          type: string
+          example: ok or error message
+        bid:
+          type: string
+          example: devApps
+        connectid:
+          type: string
+          example: tenant-devApps
+        cpodrepl:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: devApps
+        services:
+          type: array
+          items:
+            type: string
+            example: dev.app.com
+        gateway:
+          type: string
+        pod:
+          type: string
+        sharedKey:
+          type: string
+      example:
+        sharedKey: sharedKey
+        pod: pod
+        name: devApps
+        services:
+        - dev.app.com
+        - dev.app.com
+        bid: devApps
+        connectid: tenant-devApps
+        gateway: gateway
+        Result: ok or error message
         cpodrepl: 1
     OnboardResult:
       required:

@@ -1815,7 +1815,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetBundle**
-> BundleStruct GetBundle(ctx, xNextensioGroup, tenantId, bid)
+> GetBundleStruct GetBundle(ctx, xNextensioGroup, tenantId, bid)
 get bundle info of a tenant
 
 Retrieve bundle info.
@@ -1831,7 +1831,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BundleStruct**](bundleStruct.md)
+[**GetBundleStruct**](getBundleStruct.md)
 
 ### Authorization
 

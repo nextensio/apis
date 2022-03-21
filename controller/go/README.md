@@ -124,6 +124,7 @@ Class | Method | HTTP request | Description
  - [DataHdr](docs/DataHdr.md)
  - [Domain](docs/Domain.md)
  - [GatewayStruct](docs/GatewayStruct.md)
+ - [GetBundleStruct](docs/GetBundleStruct.md)
  - [GetPolicyStruct](docs/GetPolicyStruct.md)
  - [GetTenantcluster](docs/GetTenantcluster.md)
  - [HostRule](docs/HostRule.md)

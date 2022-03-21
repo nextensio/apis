@@ -6350,15 +6350,15 @@ Retrieve bundle info.
  * @param xNextensioGroup
  * @param tenantId provie tenant ID
  * @param bid provie bundle ID
-@return BundleStruct
+@return GetBundleStruct
 */
-func (a *DefaultApiService) GetBundle(ctx context.Context, xNextensioGroup string, tenantId string, bid string) (BundleStruct, *http.Response, error) {
+func (a *DefaultApiService) GetBundle(ctx context.Context, xNextensioGroup string, tenantId string, bid string) (GetBundleStruct, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue BundleStruct
+		localVarReturnValue GetBundleStruct
 	)
 
 	// create path and map variables
@@ -6431,7 +6431,7 @@ func (a *DefaultApiService) GetBundle(ctx context.Context, xNextensioGroup strin
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v BundleStruct
+			var v GetBundleStruct
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
