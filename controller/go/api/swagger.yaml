@@ -3596,7 +3596,6 @@ components:
       - gateway
       - name
       - pod
-      - pod
       - services
       - sharedkey
       type: object
