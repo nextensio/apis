@@ -12,11 +12,11 @@ package swagger
 type GetBundleStruct struct {
 	Result string `json:"Result"`
 	Bid string `json:"bid"`
-	Connectid string `json:"connectid,omitempty"`
+	Connectid string `json:"connectid"`
 	Cpodrepl int32 `json:"cpodrepl"`
 	Name string `json:"name"`
 	Services []string `json:"services"`
-	Gateway string `json:"gateway,omitempty"`
+	Gateway string `json:"gateway"`
 	Pod string `json:"pod"`
 	SharedKey string `json:"sharedKey,omitempty"`
 }

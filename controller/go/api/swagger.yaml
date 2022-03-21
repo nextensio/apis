@@ -3591,10 +3591,14 @@ components:
       required:
       - Result
       - bid
+      - connectid
       - cpodrepl
+      - gateway
       - name
       - pod
+      - pod
       - services
+      - sharedkey
       type: object
       properties:
         Result:

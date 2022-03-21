@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$1" == "" ];
+then
+  echo Please provide name of the golang swagger sdk zip file
+  exit 1
+fi
 cp go/go.mod .
 git rm -rf go
 mkdir go
